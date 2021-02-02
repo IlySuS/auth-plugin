@@ -41,7 +41,7 @@ export default {
     this.defaultOptions.axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
     this.defaultOptions.axios.defaults.responseType = 'json'
   
-    setResponseSettings()
+    this.setResponseSettings()
   
     if (this.authenticated()) {
       this.defaultOptions.axios.defaults.headers['X-Lamb-Auth-Token'] = `${this.getToken()}`

@@ -1,7 +1,7 @@
 import auth from './modules/auth.js'
 
 const webkitAuthPlugin = {
-  install(app, options) {
+  install: (app, options) => {
     auth.defaultOptions = { ...options }
     app.config.globalProperties.$auth = auth
   }
