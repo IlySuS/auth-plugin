@@ -1,7 +1,7 @@
 export const defaultOptions = {
   axios: null,
   store: null,
-},
+}
 
 export const auth = {
   login(data) {
