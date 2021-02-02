@@ -1,7 +1,10 @@
+import store from 'vuex'
+import axios from 'axios'
+
 export default {
   defaultOptions: {
-    axios: null,
-    store: null,
+    axios: axios,
+    store: store,
   },
 
   login(data) {
