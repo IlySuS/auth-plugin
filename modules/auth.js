@@ -1,9 +1,9 @@
-export const defaultOptions = {
-  axios: null,
-  store: null,
-}
+export default {
+  defaultOptions: {
+    axios: null,
+    store: null,
+  },
 
-export const auth = {
   login(data) {
     return this.defaultOptions.axios.post('auth/authorize', data)
       .then(response => response.data)
