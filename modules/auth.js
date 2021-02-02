@@ -15,6 +15,8 @@ export default {
   },
 
   authenticated() {
+    console.log('hi from plugin, store', this.defaultOptions.store)
+    console.log('hi from plugin, store getters', this.defaultOptions.store.getters)
     return this.defaultOptions.store.getters['auth/authenticated']
   },
 
