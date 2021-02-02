@@ -15,5 +15,6 @@ const webkitAuthPlugin = {
 export default webkitAuthPlugin
 
 export {
-  auth
+  auth,
+  defaultOptions
 }
