@@ -5,46 +5,46 @@ export const defaultOptions = {
 
 export const auth = {
   login(data) {
-    return defaultOptions.axios.post('auth/authorize', data)
+    return this.defaultOptions.axios.post('auth/authorize', data)
       .then(response => response.data)
   },
 
   profile() {
-    return defaultOptions.axios.get('profiles/me')
+    return this.defaultOptions.axios.get('profiles/me')
       .then(response => response.data)
   },
 
   authenticated() {
-    return defaultOptions.store.getters['auth/authenticated']
+    return this.defaultOptions.store.getters['auth/authenticated']
   },
 
   getToken() {
-    return defaultOptions.store.getters['auth/accessToken']
+    return this.defaultOptions.store.getters['auth/accessToken']
   },
 
   refreshToken() {
-    return defaultOptions.axios.post('auth/authorize_restore', {
-      expire_token: defaultOptions.store.getters['auth/expireToken']
+    return this.defaultOptions.axios.post('auth/authorize_restore', {
+      expire_token: this.defaultOptions.store.getters['auth/expireToken']
     }).then(response => {
       console.log(response, 'REFRESH TOKEN')
-      defaultOptions.store.commit('auth/setAccessToken', response.data.access_token)
-      defaultOptions.store.commit('auth/setExpireToken', response.data.expire_token)
+      this.defaultOptions.store.commit('auth/setAccessToken', response.data.access_token)
+      this.defaultOptions.store.commit('auth/setExpireToken', response.data.expire_token)
       this.setAxiosInstanse()
     })
   },
 
   logout() {
-    defaultOptions.store.dispatch('auth/clearAuthInfo')
+    this.defaultOptions.store.dispatch('auth/clearAuthInfo')
   },
 
   setAxiosInstanse() {
-    defaultOptions.axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
-    defaultOptions.axios.defaults.responseType = 'json'
+    this.defaultOptions.axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
+    this.defaultOptions.axios.defaults.responseType = 'json'
   
     setResponseSettings()
   
     if (this.authenticated()) {
-      defaultOptions.axios.defaults.headers['X-Lamb-Auth-Token'] = `${this.getToken()}`
+      this.defaultOptions.axios.defaults.headers['X-Lamb-Auth-Token'] = `${this.getToken()}`
     }
   },
 
@@ -64,7 +64,7 @@ export const auth = {
       failedQueue = []
     }
 
-    defaultOptions.axios.interceptors.response.use(function (response) {
+    this.defaultOptions.axios.interceptors.response.use(function (response) {
       return response
     }, function (error) {
 
@@ -97,10 +97,10 @@ export const auth = {
               }
 
               const token = `${this.getToken()}`
-              defaultOptions.axios.defaults.headers.common['X-Lamb-Auth-Token'] = token
+              this.defaultOptions.axios.defaults.headers.common['X-Lamb-Auth-Token'] = token
               originalRequest.headers['X-Lamb-Auth-Token'] = token
               processQueue(null, token)
-              resolve(defaultOptions.axios(originalRequest))
+              resolve(this.defaultOptions.axios(originalRequest))
             })
             .catch((err) => {
               processQueue(err, null)
