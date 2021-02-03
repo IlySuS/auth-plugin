@@ -2,10 +2,13 @@ export default {
   defaultOptions: {
     axios: null,
     store: null,
+    logoutUrl: '/',
+    authUrl: 'auth/authorize',
+    refreshTokenUrl: 'auth/authorize_restore'
   },
 
   login(data) {
-    return this.defaultOptions.axios.post('auth/authorize', data)
+    return this.defaultOptions.axios.post(`${this.defaultOptions.authUrl}`, data)
       .then(response => response.data)
   },
 
@@ -23,7 +26,7 @@ export default {
   },
 
   refreshToken() {
-    return this.defaultOptions.axios.post('auth/authorize_restore', {
+    return this.defaultOptions.axios.post(`${this.defaultOptions.refreshTokenUrl}`, {
       expire_token: this.defaultOptions.store.getters['auth/expireToken']
     }).then(response => {
       console.log(response, 'REFRESH TOKEN')
@@ -93,7 +96,7 @@ export default {
             .then(() => {
               if (error.response.status === 401 && error.response.data.error_code === 7) {
                 this.logout()
-                window.location.href = '/'
+                window.location.href = `${this.defaultOptions.logoutUrl}`
               }
 
               const token = `${this.getToken()}`
