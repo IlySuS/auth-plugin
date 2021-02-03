@@ -1,7 +1,7 @@
 export default {
   defaultOptions: {
-    axios: axios,
-    store: store,
+    axios: null,
+    store: null,
   },
 
   login(data) {
