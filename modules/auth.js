@@ -1,4 +1,5 @@
 import defaultOptions from './defaultOptions.js'
+import axios from './axios.js'
 
 export default {
   login(data) {
@@ -26,7 +27,7 @@ export default {
       console.log(response, 'REFRESH TOKEN')
       defaultOptions.store.commit('auth/setAccessToken', response.data.access_token)
       defaultOptions.store.commit('auth/setExpireToken', response.data.expire_token)
-      this.setAxiosInstanse()
+      axios.setAxiosInstanse()
     })
   },
 
