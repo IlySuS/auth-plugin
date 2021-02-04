@@ -1,38 +1,36 @@
-export default {
-  
+import defaultOptions from './defaultOptions.js'
 
+export default {
   login(data) {
-    return this.defaultOptions.axios.post(`${this.defaultOptions.authUrl}`, data)
+    return defaultOptions.axios.post(`${defaultOptions.authUrl}`, data)
       .then(response => response.data)
   },
 
   profile() {
-    return this.defaultOptions.axios.get('profiles/me')
+    return defaultOptions.axios.get('profiles/me')
       .then(response => response.data)
   },
 
   authenticated() {
-    return this.defaultOptions.store.getters['auth/authenticated']
+    return defaultOptions.store.getters['auth/authenticated']
   },
 
   getToken() {
-    return this.defaultOptions.store.getters['auth/accessToken']
+    return defaultOptions.store.getters['auth/accessToken']
   },
 
   refreshToken() {
-    return this.defaultOptions.axios.post(`${this.defaultOptions.refreshTokenUrl}`, {
-      expire_token: this.defaultOptions.store.getters['auth/expireToken']
+    return defaultOptions.axios.post(`${defaultOptions.refreshTokenUrl}`, {
+      expire_token: defaultOptions.store.getters['auth/expireToken']
     }).then(response => {
       console.log(response, 'REFRESH TOKEN')
-      this.defaultOptions.store.commit('auth/setAccessToken', response.data.access_token)
-      this.defaultOptions.store.commit('auth/setExpireToken', response.data.expire_token)
+      defaultOptions.store.commit('auth/setAccessToken', response.data.access_token)
+      defaultOptions.store.commit('auth/setExpireToken', response.data.expire_token)
       this.setAxiosInstanse()
     })
   },
 
   logout() {
-    this.defaultOptions.store.dispatch('auth/clearAuthInfo')
-  },
-
-
+    defaultOptions.store.dispatch('auth/clearAuthInfo')
+  }
 }
